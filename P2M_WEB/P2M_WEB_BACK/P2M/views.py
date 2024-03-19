@@ -7,6 +7,10 @@ from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.core.serializers.json import DjangoJSONEncoder
 from django.urls import reverse_lazy
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.decorators import api_view
+from .serializers import MesureSerializer
 
 # Create your views here.
 
@@ -123,3 +127,30 @@ class SensorDeleteView(DeleteView):
         return super().dispatch(request, *args, **kwargs)
     def get_success_url(self):
         return reverse_lazy('sensors')
+
+@api_view(['POST'])
+def create_mesure(request):
+    # Extract sensor ID from request data
+    sensor_id = request.data.get('sensor')
+    
+    # Lookup the Sensor object based on the provided ID
+    try:
+        sensor = Sensor.objects.get(id=sensor_id)
+    except Sensor.DoesNotExist:
+        return Response({"error": "Sensor does not exist fekher"}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Extract latitude and longitude from the retrieved Sensor object
+    
+    latitude = sensor.latitude
+    longitude = sensor.longitude
+
+    # Set the sensor_latitude and sensor_longitude fields in request data
+    request.data['sensor'] = sensor.id
+    request.data['sensor_latitude'] = latitude
+    request.data['sensor_longitude'] = longitude
+
+    serializer = MesureSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
