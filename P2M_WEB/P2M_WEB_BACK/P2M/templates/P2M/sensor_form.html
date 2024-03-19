@@ -23,12 +23,11 @@
     </div>
   </form>
 </div>
-<div id="map" style="height: 80vh; width: 100%"></div>
+<div class="mb-2" id="map" style="height: 80vh; width: 100%"></div>
 
 {% endblock content %} {% block JS %}
 <script>
   var sensorData = JSON.parse("{{ sensor_json | escapejs }}");
-  console.log(sensorData);
   if (sensorData.length === 0) {
     // Set default latitude and longitude
     var defaultLatitude = 36.891884466987754; // Set your default latitude here

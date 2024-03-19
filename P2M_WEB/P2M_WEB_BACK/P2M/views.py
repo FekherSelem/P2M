@@ -56,8 +56,8 @@ class SensorDetailView(DetailView):
         
         # Filter the Mesure objects based on the same longitude and latitude as the sensor
         mesure_list = list(Mesure.objects.filter(
-            sensor__latitude=sensor.latitude,
-            sensor__longitude=sensor.longitude
+            sensor_latitude=sensor.latitude,
+            sensor_longitude=sensor.longitude
         ).values(
             'id', 'date', 'ph', 'temperature', 'humidity', 'nitrogen', 'phosphorus', 
             'potassium', 'rainfall', 'sensor_latitude', 'sensor_longitude'
@@ -80,6 +80,11 @@ class SensorCreateView(CreateView):
         return super().form_valid(form)
     def get_success_url(self):
         return reverse_lazy('sensors')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        emptylist =[]
+        context['sensor_json'] = json.dumps(emptylist)
+        return context
     
 @method_decorator(login_required, name='dispatch')
 class SensorUpdateView(UpdateView):
