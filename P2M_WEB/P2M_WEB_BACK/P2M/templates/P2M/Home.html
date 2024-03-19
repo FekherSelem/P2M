@@ -1,0 +1,24 @@
+{% extends "P2M/Base.html" %}
+{% load static %}
+{% block content %}
+<div class="row my-5">
+    <div class="col-6 mt-4"><p class="h2">The Project</p>
+        <p class="mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi eaque ut molestias perferendis velit
+            rem voluptatem veritatis in? Omnis magni illum ab aspernatur eum excepturi facere voluptatibus tempore animi
+            blanditiis!</p>
+        <p class="mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi eaque ut molestias perferendis velit rem voluptatem veritatis in? Omnis magni illum ab aspernatur eum excepturi facere voluptatibus tempore animi blanditiis!</p>
+
+    </div>
+    <div class="col-6"><img src="{% static 'P2M/crop1.jpg' %}" class="img-fluid" alt=""></div>
+</div>
+<div class="row my-5">
+    <div class="col-6"><img src="{% static 'P2M/crop1.jpg' %}" class="img-fluid" alt=""></div>
+    <div class="col-6 mt-4">
+        <p class="h2">The Project</p>
+        <p class="mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi eaque ut molestias perferendis
+            velit rem voluptatem veritatis in? Omnis magni illum ab aspernatur eum excepturi facere voluptatibus tempore
+            animi blanditiis!</p>
+    </div>
+</div>
+
+{% endblock content %}

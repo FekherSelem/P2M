@@ -1,0 +1,113 @@
+{% extends "P2M/Base.html" %} {% load static %} {% block CSS %}
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""
+/>
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""
+></script>
+{% endblock CSS %} {% block content %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Latitude</th>
+      <th scope="col">Longitude</th>
+      <th>
+        <a
+          class="btn btn-success btn-sm"
+          href="{% url 'sensor-create' %}"
+          role="button"
+          >Add</a
+        >
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for sensor in sensors %}
+    <tr>
+      <td>{{ sensor.id }}</td>
+      <td>{{ sensor.name }}</td>
+      <td>{{ sensor.latitude }}</td>
+      <td>{{ sensor.longitude }}</td>
+      <td>
+        <div
+          class="btn-group btn-group-sm"
+          role="group"
+          aria-label="Small button group"
+        >
+          <a
+            class="btn btn-primary"
+            href="{% url 'sensor-detail' sensor.id %}"
+            role="button"
+            >View</a
+          >
+          <a
+            class="btn btn-warning"
+            href="{% url 'sensor-update' sensor.id %}"
+            role="button"
+            >Edit</a
+          >
+          <a
+            class="btn btn-danger"
+            href="{% url 'sensor-delete' sensor.id %}"
+            role="button"
+            >delete</a
+          >
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div id="map" style="height: 80vh; width: 100%"></div>
+
+{% endblock content %} {% block JS %}
+<script>
+  var sensorsData = JSON.parse("{{ sensors_json | escapejs }}");
+  if (sensorsData.length === 0) {
+    // Set default latitude and longitude
+    var defaultLatitude = 36.891884466987754; // Set your default latitude here
+    var defaultLongitude = 10.18758144894045; // Set your default longitude here
+    var avgLatitude = defaultLatitude;
+    var avgLongitude = defaultLongitude;
+  } else {
+    // Calculate average latitude and longitude
+    var latitudes = sensorsData.map(function (sensor) {
+      return sensor.latitude;
+    });
+    var longitudes = sensorsData.map(function (sensor) {
+      return sensor.longitude;
+    });
+
+    var avgLatitude =
+      latitudes.reduce(function (acc, curr) {
+        return acc + curr;
+      }, 0) / latitudes.length;
+    var avgLongitude =
+      longitudes.reduce(function (acc, curr) {
+        return acc + curr;
+      }, 0) / longitudes.length;
+  }
+  // Initialize Leaflet map with the calculated center
+  var map = L.map("map").setView([avgLatitude, avgLongitude], 13);
+
+  // Add a base tile layer (you can choose any other tile provider)
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
+
+  // Iterate over sensor data and add markers with labels
+  sensorsData.forEach(function (sensor) {
+    var marker = L.marker([sensor.latitude, sensor.longitude]).addTo(map);
+    marker.bindPopup("<b>" + sensor.name + "</b>"); // Add a popup with sensor name and ID
+  });
+</script>
+{% endblock JS %}

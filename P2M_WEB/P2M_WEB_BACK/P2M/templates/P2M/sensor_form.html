@@ -1,0 +1,60 @@
+{% extends "P2M/Base.html" %} {% load crispy_forms_tags %} {% block CSS %}
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""
+/>
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""
+></script>
+{% endblock CSS %} {% block content %}
+<div class="content-section">
+  <form method="post">
+    {% csrf_token %}
+    <fieldset class="from-group">
+      <legend class="border-bottom mb-4">Add Sensor</legend>
+      {{form|crispy}}
+    </fieldset>
+    <div class="form-group">
+      <button class="btn btn-outline-info" type="submit">Add</button>
+    </div>
+  </form>
+</div>
+<div id="map" style="height: 80vh; width: 100%"></div>
+
+{% endblock content %} {% block JS %}
+<script>
+  var sensorData = JSON.parse("{{ sensor_json | escapejs }}");
+  console.log(sensorData);
+  if (sensorData.length === 0) {
+    // Set default latitude and longitude
+    var defaultLatitude = 36.891884466987754; // Set your default latitude here
+    var defaultLongitude = 10.18758144894045;
+  } else {
+    var defaultLatitude = sensorData.latitude; // Set your default latitude here
+    var defaultLongitude = sensorData.longitude;
+  }
+  var map = L.map("map").setView([defaultLatitude, defaultLongitude], 13);
+
+  // Add a base tile layer (you can choose any other tile provider)
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
+  var marker = L.marker([sensorData.latitude, sensorData.longitude]).addTo(map);
+  marker.bindPopup("<b>" + sensorData.name + "</b>");
+  var popup = L.popup();
+
+  function onMapClick(e) {
+    popup
+      .setLatLng(e.latlng)
+      .setContent("You clicked the map at " + e.latlng.toString())
+      .openOn(map);
+  }
+
+  map.on("click", onMapClick);
+</script>
+{% endblock JS %}
