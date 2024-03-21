@@ -10,6 +10,7 @@ urlpatterns = [
     path('sensor/<pk>/update/', SensorUpdateView.as_view(), name='sensor-update'),
     path('sensor/<pk>/delete/', SensorDeleteView.as_view(), name='sensor-delete'),
     path('mesures/', create_mesure, name='create_mesure'),
+    path('predict/', views.predict, name='predict'),
     path('about/', views.about, name='P2M-about'),
     
 ]

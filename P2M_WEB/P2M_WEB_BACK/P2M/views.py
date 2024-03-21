@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 from .serializers import MesureSerializer
+from .model_loader import model
 
 # Create your views here.
 
@@ -135,6 +136,17 @@ class SensorDeleteView(DeleteView):
 
 @api_view(['POST'])
 def create_mesure(request):
+    # {
+    # "ph": 7,
+    # "temperature": 24,
+    # "humidity": 100,
+    # "nitrogen": 101,
+    # "phosphorus": 102,
+    # "potassium": 103,
+    # "rainfall": 105,
+    # "sensor": "000000000000000000000003"
+    # }
+
     # Extract sensor ID from request data
     sensor_id = request.data.get('sensor')
     
@@ -159,3 +171,58 @@ def create_mesure(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def predict(request):
+    # [
+    # {
+    #     "Nitrogen": 101,
+    #     "phosphorus": 102,
+    #     "potassium": 103,
+    #     "temperature": 24,
+    #     "humidity": 100,
+    #     "ph": 7,
+    #     "rainfall": 105
+    # },
+    # {
+    #     "Nitrogen": 95,
+    #     "phosphorus": 98,
+    #     "potassium": 110,
+    #     "temperature": 22,
+    #     "humidity": 98,
+    #     "ph": 6.5,
+    #     "rainfall": 90
+    # }
+    # ]
+
+    if request.method == 'POST':
+        # Get input data from the request
+        input_data_list = request.data
+        predictions = []
+
+        for input_data in input_data_list:
+            input_data_values = [
+                input_data["Nitrogen"],
+                input_data["phosphorus"],
+                input_data["potassium"],
+                input_data["temperature"],
+                input_data["humidity"],
+                input_data["ph"],
+                input_data["rainfall"]
+            ]
+            # Print input data for debugging
+            print("Input data:", input_data_values)
+
+            # Make prediction using the loaded model
+            prediction = model.predict([input_data_values])
+
+            predictions.append(prediction)
+
+        # Print predictions for debugging
+        print("Predictions:", predictions)
+
+        # Return the predictions as a JSON response
+        return Response({'predictions': predictions})
+    else:
+        return Response({'error': 'Only POST requests are supported.'})
