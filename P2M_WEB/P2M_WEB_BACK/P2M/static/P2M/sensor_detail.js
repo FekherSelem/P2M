@@ -245,16 +245,20 @@ function calculateAndDisplayLabel() {
   var chartData = generateChartData(startDate, endDate);
   // Calculate average data from chartData
   var avgData = calculateAverageData(chartData);
-  var requestData = {
-    Nitrogen: avgData.nitrogenData,
-    phosphorus: avgData.phosphorusData,
-    potassium: avgData.potassiumData,
-    temperature: avgData.temperatureData,
-    humidity: avgData.humidityData,
-    ph: avgData.phData,
-    rainfall: avgData.rainfallData,
-  };
+  console.log(avgData);
 
+  var requestData = [
+    {
+      Nitrogen: avgData.avgNitrogen,
+      phosphorus: avgData.avgPhosphorus,
+      potassium: avgData.avgPotassium,
+      temperature: avgData.avgTemperature,
+      humidity: avgData.avgHumidity,
+      ph: avgData.avgPH,
+      rainfall: avgData.avgRainfall,
+    },
+  ];
+  console.log(requestData);
   // Send the average data to the predict endpoint using a POST request
   fetch(predictEndpoint, {
     method: "POST",
@@ -268,7 +272,7 @@ function calculateAndDisplayLabel() {
     .then((data) => {
       // Display the returned label on the page
       var labelResultElement = document.getElementById("labelResult");
-      labelResultElement.textContent = data.predictions;
+      labelResultElement.textContent = data.predictions[0];
     })
     .catch((error) => {
       console.error("Error:", error);
