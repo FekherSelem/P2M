@@ -1,22 +1,22 @@
 stages:
   preprocess:
-    cmd: python P2M/preprocess.py
+    cmd: python preprocess.py
     deps:
-      - P2M/data/raw/Crop_recommendation.csv
+      - P2M_ML/Crop_recommendation.csv
     outs:
-      - P2M/data/processed/preprocessed_data.csv
+      - data/processed/preprocessed_data.csv
 
   train:
-    cmd: python P2M/train.py
+    cmd: python train.py
     deps:
-      - P2M/data/processed/preprocessed_data.csv
+      - data/processed/preprocessed_data.csv
     outs:
-      - P2M/models/model.pkl
+      - models/model.pkl
 
   evaluate:
-    cmd: python P2M/evaluate.py
+    cmd: python evaluate.py
     deps:
-      - P2M/models/model.pkl
-      - P2M/data/processed/preprocessed_data.csv
+      - models/model.pkl
+      - data/processed/preprocessed_data.csv
     outs:
-      - P2M/results/evaluation_metrics.json
+      - results/evaluation_metrics.json
