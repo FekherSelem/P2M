@@ -1,0 +1,15 @@
+stages:
+  preprocess:
+    cmd: python preprocess.py P2M_ML/Crop_recommendation.csv data/processed
+    deps:
+      - P2M_ML/Crop_recommendation.csv
+      - preprocess.py
+    outs:
+      - data/processed
+  train:
+    cmd: python train.py data/processed model.pkl
+    deps:
+      - data/processed
+      - train.py
+    outs:
+      - model.pkl
