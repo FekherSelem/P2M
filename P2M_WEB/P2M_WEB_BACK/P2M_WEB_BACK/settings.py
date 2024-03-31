@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'P2M.apps.P2MConfig',
     'crispy_forms',
-    'crispy_bootstrap4',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ml_model_app',
+    'crispy_bootstrap4',
 ]
 
 MIDDLEWARE = [
