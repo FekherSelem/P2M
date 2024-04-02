@@ -1,18 +1,11 @@
 {% extends "P2M/Base.html" %} {% load static %} {% block CSS %}
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-  crossorigin=""
-/>
-<script
-  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-  crossorigin=""
-></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 {% endblock CSS %} {% block content %}
 
-<table class="table">
+<table class="table" style="margin-top: 80px;">
   <thead>
     <tr>
       <th scope="col">ID</th>
@@ -20,12 +13,7 @@
       <th scope="col">Latitude</th>
       <th scope="col">Longitude</th>
       <th>
-        <a
-          class="btn btn-success btn-sm"
-          href="{% url 'sensor-create' %}"
-          role="button"
-          >Add</a
-        >
+        <a class="btn btn-success btn-sm" href="{% url 'sensor-create' %}" role="button">Add</a>
       </th>
     </tr>
   </thead>
@@ -37,29 +25,10 @@
       <td>{{ sensor.latitude }}</td>
       <td>{{ sensor.longitude }}</td>
       <td>
-        <div
-          class="btn-group btn-group-sm"
-          role="group"
-          aria-label="Small button group"
-        >
-          <a
-            class="btn btn-primary"
-            href="{% url 'sensor-detail' sensor.id %}"
-            role="button"
-            >View</a
-          >
-          <a
-            class="btn btn-warning"
-            href="{% url 'sensor-update' sensor.id %}"
-            role="button"
-            >Edit</a
-          >
-          <a
-            class="btn btn-danger"
-            href="{% url 'sensor-delete' sensor.id %}"
-            role="button"
-            >delete</a
-          >
+        <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+          <a class="btn btn-primary" href="{% url 'sensor-detail' sensor.id %}" role="button">View</a>
+          <a class="btn btn-warning" href="{% url 'sensor-update' sensor.id %}" role="button">Edit</a>
+          <a class="btn btn-danger" href="{% url 'sensor-delete' sensor.id %}" role="button">delete</a>
         </div>
       </td>
     </tr>

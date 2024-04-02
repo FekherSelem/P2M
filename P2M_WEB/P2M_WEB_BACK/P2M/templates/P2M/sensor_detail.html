@@ -1,6 +1,6 @@
 {% extends "P2M/Base.html" %} {%load static%} {% block content %}
 
-<table class="table">
+<table class="table" style="margin-top: 80px;">
   <thead>
     <tr>
       <th scope="col">ID</th>
@@ -8,14 +8,8 @@
       <th scope="col">Latitude</th>
       <th scope="col">Longitude</th>
       <th>
-        <button
-          id="predictButton"
-          onclick="calculateAndDisplayLabel()"
-          type="button"
-          class="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop"
-        >
+        <button id="predictButton" onclick="calculateAndDisplayLabel()" type="button" class="btn btn-primary"
+          data-bs-toggle="modal" data-bs-target="#staticBackdrop">
           Predict
         </button>
       </th>
@@ -32,25 +26,13 @@
   </tbody>
 </table>
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="staticBackdrop"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="staticBackdropLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">...</div>
       <div class="modal-footer">
@@ -81,35 +63,23 @@
   </div>
 </div>
 
-<div
-  class="chart-container"
-  style="
+<div class="chart-container" style="
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-around;
-  "
->
+  ">
   <div style="width: 40vw">
     <canvas class="border border-4 border-black mb-2" id="phChart"></canvas>
   </div>
   <div style="width: 40vw">
-    <canvas
-      class="border border-4 border-black mb-2"
-      id="temperatureChart"
-    ></canvas>
+    <canvas class="border border-4 border-black mb-2" id="temperatureChart"></canvas>
   </div>
   <div style="width: 40vw">
-    <canvas
-      class="border border-4 border-black mb-2"
-      id="rainfallChart"
-    ></canvas>
+    <canvas class="border border-4 border-black mb-2" id="rainfallChart"></canvas>
   </div>
   <div style="width: 40vw">
-    <canvas
-      class="border border-4 border-black mb-2"
-      id="humidityChart"
-    ></canvas>
+    <canvas class="border border-4 border-black mb-2" id="humidityChart"></canvas>
   </div>
   <div style="width: 40vw">
     <canvas class="border border-4 border-black mb-2" id="npkChart"></canvas>
