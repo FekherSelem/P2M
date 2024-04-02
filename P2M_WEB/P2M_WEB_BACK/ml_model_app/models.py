@@ -1,3 +1,10 @@
-from django.db import models
+from django.apps import AppConfig
+import joblib
 
-# Create your models here.
+class MlModelAppConfig(AppConfig):
+    name = 'ml_model_app'
+    model = None
+
+    def ready(self):
+        # Load your model here
+        self.model = joblib.load('ml_model_app/models/model_pipeline_nb.joblib')

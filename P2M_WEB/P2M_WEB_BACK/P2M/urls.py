@@ -1,6 +1,7 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
-from .views import SensorListView, SensorDetailView, SensorCreateView,SensorUpdateView,SensorDeleteView,create_mesure
+from .views import SensorListView, SensorDetailView, SensorCreateView,SensorUpdateView,SensorDeleteView,create_mesure, predict
+
 
 urlpatterns = [
     path('', views.home, name='P2M-home'),
@@ -10,7 +11,11 @@ urlpatterns = [
     path('sensor/<pk>/update/', SensorUpdateView.as_view(), name='sensor-update'),
     path('sensor/<pk>/delete/', SensorDeleteView.as_view(), name='sensor-delete'),
     path('mesures/', create_mesure, name='create_mesure'),
-    path('predict/', views.predict, name='predict'),
     path('about/', views.about, name='P2M-about'),
+    path('predict/', predict, name='predict'),
+    path('api/', include('ml_model_app.urls')),
+    path('api/predict/', views.predict, name='api_predict'),
     
 ]
+    
+

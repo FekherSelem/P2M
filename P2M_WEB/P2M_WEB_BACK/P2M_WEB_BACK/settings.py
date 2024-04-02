@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ml_model_app',
     'crispy_bootstrap4',
+    'ml_model_app.apps.MlModelAppConfig',
 ]
 
 MIDDLEWARE = [

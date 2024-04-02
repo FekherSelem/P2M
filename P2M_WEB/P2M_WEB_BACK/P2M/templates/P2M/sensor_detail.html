@@ -7,7 +7,7 @@
       <th scope="col">Name</th>
       <th scope="col">Latitude</th>
       <th scope="col">Longitude</th>
-      <th><button onclick="calculateAndDisplayLabel()" class="btn btn-primary">Predict</button></th>
+      <th><button id="predictButton" onclick="calculateAndDisplayLabel()" class="btn btn-primary">Predict</button></th>
     </tr>
   </thead>
   <tbody>
@@ -38,50 +38,39 @@
   </div>
 </div>
 
-  <div
-    class="chart-container"
-    style="
+<div class="chart-container" style="
       display: flex;
       flex-wrap: wrap;
       flex-direction: row;
       justify-content: space-around;
-    "
-  >
-    <div style="width: 40vw">
-      <canvas class="border border-4 border-black mb-2" id="phChart"></canvas>
-    </div>
-    <div style="width: 40vw">
-      <canvas
-        class="border border-4 border-black mb-2"
-        id="temperatureChart"
-      ></canvas>
-    </div>
-    <div style="width: 40vw">
-      <canvas
-        class="border border-4 border-black mb-2"
-        id="rainfallChart"
-      ></canvas>
-    </div>
-    <div style="width: 40vw">
-      <canvas
-        class="border border-4 border-black mb-2"
-        id="humidityChart"
-      ></canvas>
-    </div>
-    <div style="width: 40vw">
-      <canvas class="border border-4 border-black mb-2" id="npkChart"></canvas>
-    </div>
+    ">
+  <div style="width: 40vw">
+    <canvas class="border border-4 border-black mb-2" id="phChart"></canvas>
   </div>
+  <div style="width: 40vw">
+    <canvas class="border border-4 border-black mb-2" id="temperatureChart"></canvas>
+  </div>
+  <div style="width: 40vw">
+    <canvas class="border border-4 border-black mb-2" id="rainfallChart"></canvas>
+  </div>
+  <div style="width: 40vw">
+    <canvas class="border border-4 border-black mb-2" id="humidityChart"></canvas>
+  </div>
+  <div style="width: 40vw">
+    <canvas class="border border-4 border-black mb-2" id="npkChart"></canvas>
+  </div>
+</div>
 
-  {% endblock content %} {% block JS %}
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    var sensorsData = JSON.parse("{{ mesure_json | escapejs }}");
-    var predictEndpoint = "{% url 'predict' %}";
-    const csrfToken = "{{ csrf_token }}";
-  </script>
+{% endblock content %} {% block JS %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  var sensorsData = JSON.parse("{{ mesure_json | escapejs }}");
+  var predictEndpoint = "{% url 'api_predict' %}";
+  const csrfToken = "{{ csrf_token }}";
+</script>
 
-  <script src="{% static 'P2M/sensor_detail.js' %}"></script>
+<script src="{% static 'P2M/sensor_detail.js' %}"></script>
 
-  {% endblock JS %}
+
+{% endblock JS %}
 </div>

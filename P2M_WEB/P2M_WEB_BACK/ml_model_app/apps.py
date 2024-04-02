@@ -8,7 +8,10 @@ class MlModelAppConfig(AppConfig):
     model = None  # Placeholder for the loaded model
 
     def ready(self):
+        
         # Load your model
         if not self.model:
             self.model = joblib.load(r'C:\Users\safag\P2M\P2M_ML\python\model_pipeline_nb.joblib')
+        
+
 

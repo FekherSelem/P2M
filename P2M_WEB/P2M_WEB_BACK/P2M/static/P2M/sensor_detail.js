@@ -150,31 +150,31 @@ function updateCharts() {
   const chartConfigs = [
     {
       id: "phChart",
-      label: "pH",
+      label: "ph",
       data: chartData.phData,
       color: "rgba(255, 99, 132, 1)",
     },
     {
       id: "temperatureChart",
-      label: "Temperature",
+      label: "temperature",
       data: chartData.temperatureData,
       color: "rgba(54, 162, 235, 1)",
     },
     {
       id: "rainfallChart",
-      label: "Rainfall",
+      label: "rainfall",
       data: chartData.rainfallData,
       color: "rgba(255, 99, 71, 1)",
     },
     {
       id: "humidityChart",
-      label: "Humidity",
+      label: "humidity",
       data: chartData.humidityData,
       color: "rgba(255, 206, 86, 1)",
     },
     {
       id: "npkChart",
-      label: ["Nitrogen", "Phosphorus", "Potassium"],
+      label: ["Nitrogen", "phosphorus", "potassium"],
       data: [
         chartData.nitrogenData,
         chartData.phosphorusData,
@@ -237,7 +237,12 @@ function updateCharts() {
 
 updateCharts();
 
-function calculateAndDisplayLabel() {
+
+
+
+
+
+function calculateAndDisplayLabel(startDate, endDate) {
   var startDate = new Date(document.getElementById("start-date").value);
   var endDate = new Date(document.getElementById("end-date").value);
 
@@ -247,17 +252,17 @@ function calculateAndDisplayLabel() {
   var avgData = calculateAverageData(chartData);
   console.log(avgData);
 
-  var requestData = [
-    {
-      Nitrogen: avgData.avgNitrogen,
-      phosphorus: avgData.avgPhosphorus,
-      potassium: avgData.avgPotassium,
-      temperature: avgData.avgTemperature,
-      humidity: avgData.avgHumidity,
-      ph: avgData.avgPH,
-      rainfall: avgData.avgRainfall,
-    },
-  ];
+  var requestData =
+  {
+    Nitrogen: avgData.avgNitrogen,
+    phosphorus: avgData.avgPhosphorus,
+    potassium: avgData.avgPotassium,
+    temperature: avgData.avgTemperature,
+    humidity: avgData.avgHumidity,
+    ph: avgData.avgPH,
+    rainfall: avgData.avgRainfall,
+  }
+    ;
   console.log(requestData);
   // Send the average data to the predict endpoint using a POST request
   fetch(predictEndpoint, {
@@ -268,18 +273,51 @@ function calculateAndDisplayLabel() {
     },
     body: JSON.stringify(requestData),
   })
-    .then((response) => response.json())
-    .then((data) => {
-      // Display the returned label on the page
-      var labelResultElement = document.getElementById("labelResult");
-      labelResultElement.textContent = data.predictions[0];
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
     })
-    .catch((error) => {
-      console.error("Error:", error);
-      var labelResultElement = document.getElementById("labelResult");
-      labelResultElement.textContent = "Error fetching label.";
+    .then(requestData => {
+      console.log('Success:', requestData);
+      displayPrediction(requestData); // You'll need to define this function to update the UI with the prediction result
+    })
+    .catch(error => {
+      console.error('Error:', error);
     });
 }
+
+function displayPrediction(predictionData) {
+  // Assuming predictionData contains a field 'predicted_crop'
+  const predictedCrop = predictionData.predicted_crop;
+  // Now update the DOM with this information
+  const predictionResultElement = document.getElementById('predictionResult');
+  if (predictionResultElement) { // Check if the element exists
+    predictionResultElement.textContent = `The suitable crop is ${predictedCrop}.`;
+  }
+}
+
+
+// Add a click event listener to the predict button
+document.addEventListener('DOMContentLoaded', () => {
+  const predictButton = document.getElementById('predictButton'); // Make sure this matches your button's ID
+  if (predictButton) { // Only add listener if the button exists
+    predictButton.addEventListener('click', () => {
+      // Dates need to be converted to ISO strings without time information
+      const startDate = new Date(2023, 2, 2); // Remember, months are 0-indexed
+      const endDate = new Date(2023, 2, 3);
+      calculateAndDisplayLabel(startDate, endDate);
+    });
+  }
+});
+
+
+
+
+
+
+
 
 function calculateAverageData(chartData) {
   // Calculate averages of chartData
@@ -295,8 +333,8 @@ function calculateAverageData(chartData) {
   return avgData;
 }
 
-function calculateAverage(data) {
-  if (data.length === 0) return 0; // Return 0 if no data is available
-  var sum = data.reduce((total, value) => total + value, 0);
-  return sum / data.length;
+function calculateAverage(requestData) {
+  if (requestData.length === 0) return 0; // Return 0 if no data is available
+  var sum = requestData.reduce((total, value) => total + value, 0);
+  return sum / requestData.length;
 }
