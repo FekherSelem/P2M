@@ -21,9 +21,9 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         fake = Faker()
 
-        sensor = Sensor.objects.get(id='000000000000000000000002')
+        sensor = Sensor.objects.get(id='000000000000000000000004')
 
-        start_date = datetime(2024, 3, 19)
+        start_date = datetime(2023, 4, 2)
         end_date = datetime(2024, 4, 2)
         current_date = start_date
 
@@ -38,8 +38,8 @@ class Command(BaseCommand):
                 potassium=uniform(0, 150),
                 rainfall=uniform(0, 300),
                 sensor=sensor,
-                sensor_latitude=36.891339,
-                sensor_longitude=10.187071,
+                sensor_latitude=	36.890482,
+                sensor_longitude=10.183483,
             )
             current_date += timedelta(days=1)
 
