@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_bootstrap4',
     'ml_model_app.apps.MlModelAppConfig',
+    'disease_app.apps.DiseaseAppConfig'
 ]
 
 MIDDLEWARE = [

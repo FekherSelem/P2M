@@ -2,7 +2,7 @@ from django.apps import AppConfig
 import joblib
 import os
 
-relative_model_path = "../../../P2M_ML/python/model_pipeline_nb.joblib"
+relative_model_path = "../../../P2M_ML/python_crop_recommendation/model_pipeline_nb.joblib"
 script_directory = os.path.dirname(os.path.abspath(__file__))
 model_file_path = os.path.normpath(os.path.join(script_directory, relative_model_path))
 

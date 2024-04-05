@@ -18,6 +18,9 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from users import views as user_views
+from disease_app.views import predict_disease  # Import the view
+from ml_model_app.views import predict
+
 
 
 
@@ -29,6 +32,12 @@ urlpatterns = [
     path('profile/', user_views.profile, name='profile'),
     path('', include('P2M.urls')),
     path('api/', include('ml_model_app.urls')),  # Include your app's URLs
+    path('api/predict/', predict, name='predict'),
+
+    
+    path('disease/', include('disease_app.urls')), 
+    path('disease/predict_disease/', predict_disease, name='predict_disease'),
+    
    
 
 

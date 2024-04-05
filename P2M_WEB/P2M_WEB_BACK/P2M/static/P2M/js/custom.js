@@ -9,9 +9,7 @@ $(function () {
   /* Preloader
   -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
 
-  setTimeout(function () {
-    $('.loader_bg').fadeToggle();
-  }, 1500);
+
 
   /* Tooltip
   -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
@@ -88,8 +86,8 @@ function closeNav() {
   //Variables on page load
   var $myCarousel = $("#carouselExampleIndicators"),
     $firstAnimatingElems = $myCarousel
-    .find(".carousel-item:first")
-    .find("[data-animation ^= 'animated']");
+      .find(".carousel-item:first")
+      .find("[data-animation ^= 'animated']");
 
   //Initialize carousel
   $myCarousel.carousel();
@@ -185,7 +183,7 @@ function allEventListners() {
   // toggler icon click event
   navToggler.addEventListener('click', togglerClick);
   // nav links click event
-  navLinks.forEach( elem => elem.addEventListener('click', navLinkClick));
+  navLinks.forEach(elem => elem.addEventListener('click', navLinkClick));
 }
 
 // togglerClick function
@@ -196,7 +194,7 @@ function togglerClick() {
 
 // navLinkClick function
 function navLinkClick() {
-  if(navMenu.classList.contains('open')) {
+  if (navMenu.classList.contains('open')) {
     navToggler.click();
   }
 }
