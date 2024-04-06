@@ -12,6 +12,8 @@ urlpatterns = [
     path('sensor/<pk>/delete/', SensorDeleteView.as_view(), name='sensor-delete'),
     path('mesures/', create_mesure, name='create_mesure'),
     path('about/', views.about, name='P2M-about'),
+    path('disease/', views.disease, name='P2M-disease'),
+    
     
 ]
     

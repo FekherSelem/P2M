@@ -1,14 +1,51 @@
+{% extends "P2M/Base.html" %}
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/static/P2M/css/disease.css">
+    <title>Disease</title>
 </head>
 
-<body>
+<body
+    style="background-image: url('/static/P2M/images/disease.jpg'); background-position: top; background-repeat: no-repeat; background-size:100%; z-index: 0;">
+    <!-- Trigger/Open The Modal -->
+    <h1>Disease prediction</h1>
+    <button id="myBtn">Click here</button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Insert your image here :</p>
+            <input type="file" id="crop" name="crop" accept="image/png, image/jpeg" />
+            <img id="uploadedImage" style="display: none; width: 200px; height: 200px;" />
+            <div id="predictionResult"></div>
+
+        </div>
+
+    </div>
+
+
+
+    </div>
+
+    {% endblock content %} {% block JS %}
+
+    <script src="/static/P2M/js/disease.js"></script>
+    <script>
+        var predictEndpoint = "{% url 'predict_disease' %}";
+    </script>
+    {% endblock JS %}
+
 
 </body>
+
 
 </html>

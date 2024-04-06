@@ -179,3 +179,6 @@ def create_mesure(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+def disease(request):
+
+    return render(request,'P2M/Disease.html')
